@@ -204,7 +204,11 @@
                         </div>
                     </div>
                 </div>
-                
+<button id="loginBtn"
+        type="button"
+        class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition">
+  تسجيل الدخول
+</button>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <input id="remember-me" name="remember-me" type="checkbox" 
@@ -977,7 +981,7 @@
 
     <script>
     // الكود الأساسي للوظائف
-   const scriptURL = https://script.google.com/macros/s/AKfycbzTfChhkYd_aJyvMsGJIQOWwyByCW35p1PbH5Q96UkuLvcTCwEz4h4CNQm9ZZFgTT1m/exec";
+   const scriptURL = https://https://script.google.com/macros/s/AKfycbz4wyvXCngNjMQFdx14rgu99m2kdN3YVMkkP_hxHNJ2bmchFln3fuHHH5PwWKRaDS4l/exec";
 
     let currentUser = null;
     const permissions = {
@@ -2069,9 +2073,42 @@
         }
     }, 60000);
     </script>
+<script>
+document.getElementById("loginBtn").addEventListener("click", function () {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  fetch("https://script.google.com/macros/s/AKfycbz4wyvXCngNjMQFdx14rgu99m2kdN3YVMkkP_hxHNJ2bmchFln3fuHHH5PwWKRaDS4l/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "login",
+      username,
+      password
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      localStorage.setItem("role", data.role);
+      window.location.href = "/dashboard";
+    } else {
+      alert("بيانات الدخول غير صحيحة");
+    }
+  })
+  .catch(err => {
+    console.error("خطأ في الاتصال:", err);
+    alert("تعذر الاتصال بالخادم");
+  });
+});
+</script>
+
 </body>
 
 </html>
+
 
 
 
